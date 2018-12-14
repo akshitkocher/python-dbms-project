@@ -1,0 +1,198 @@
+import psycopg2
+import sys
+dsn_database = "aa"            
+dsn_hostname = "localhost" 
+dsn_port = "5433"                  
+dsn_uid = "postgres"        
+dsn_pwd = "akshit"      
+try:
+    conn_string = "host="+dsn_hostname+" port="+dsn_port+" dbname="+dsn_database+" user="+dsn_uid+" password="+dsn_pwd
+    print "Connecting to database\n  ->%s" % (conn_string)
+    conn=psycopg2.connect(conn_string)
+    print "Connected!\n"
+except:
+    print "Unable to connect to the database."
+cursor = conn.cursor()
+#cursor.execute( "SELECT name,rollno FROM asd" )
+#insert_query = "INSERT INTO asd VALUES {}".format("('Rohan', '1278hw')")
+#cursor.execute(insert_query)
+
+cursor.execute( "SELECT name,size,color,price,qty FROM shoe" )
+for i,j,k,l,n in cursor.fetchall() :
+        print i,j,k,l,n
+print('...............................................')
+def menu():
+    print('..........................................................')
+    print("Press 1: To add shoe")
+    print("Press 2: To check shoe")
+    print("Press 3: To buy things and biling ")
+    print("Press 4: To quit the program")
+    print("Press 5: To add up stock in inventory")
+    print('...........................................................')
+    return int (input("What would like to do?"))
+run =menu()
+
+while True:
+    if run==1:
+        name=input("Enter the shoe you want to insert")
+        size=input(("Enter the size you want to insert"))
+        color=input(("Enter the color you want to insert"))
+        price=input(("Enter the price you want to insert"))
+        qty=input(("Enter the qty you want to insert"))
+        
+        insert_query = ("INSERT INTO SHOE VALUES {}".format((name,size,color,price,qty)))
+        print(insert_query)
+        
+        cursor.execute(insert_query)
+        conn.commit()
+        print("donnr")
+        run= menu()
+
+    elif run==2:
+        cursor.execute( "SELECT * FROM SHOE" )
+        for i,j,k in cursor.fetchall() :
+            print i,j,k
+        run=menu()
+    elif run==3:
+        conne=psycopg2.connect(conn_string)
+        cursor=conne.cursor()
+        q=input("How many things you want to buy")
+        SHOEBILLno=input("Enter the SHOEBILL no")
+        print('...................................................')
+        def menu1():
+            print("Press 1: Superstar")
+            print("Press 2: Stansmith")
+            print("Press 3: Jordan")
+            print("Press 4: Steves")
+            print("Press 5: Alphabounce")
+            print("Press 6: Queer")
+            print("Press 7: Smith")
+            print("Press 8: Cord")
+            print("Press 9: Airbounce")
+            print("Press 10: Snekas")
+            print("Press 11: To create SHOEBILL")
+            return int (input("What would like to do?"))
+        new=menu1()
+        #cursor.execute('''CREATE TABLE SHOEBILL(Item char(20),QTY int , price bigint);''')
+        while True:
+            #cursor.execute('''CREATE TABLE SHOEBILL(Item char(20),QTY int , price bigint);''')
+            if new==1:
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE NAME=%s", (qty, 'Superstar'))   
+                #price=(cursor.fetchall())
+                price = 3000*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Superstar',int(price),qty)))
+                cursor.execute(insert_query)
+                print(insert_query)
+                conne.commit()
+                new=menu1()
+            
+            elif new==2:
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE name=%s", (qty, 'Stansmith'))
+                price=4000*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Stansmith',int(price),qty)))
+                cursor.execute(insert_query)
+                conne.commit()
+                new=menu1()
+            elif new==3:
+                
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE name=%s", (qty, 'Jordan'))
+                price=7000*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Jordan',int(price),qty)))
+                cursor.execute(insert_query)
+                conne.commit()
+
+                new=menu1()
+            elif new==4:
+                
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE name=%s", (qty, 'Steves'))
+                price=2000*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Steves',int(price),qty)))
+                cursor.execute(insert_query)
+                conne.commit() 
+                new=menu1()
+            elif new==5:
+                
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE name=%s", (qty, 'Alphabounce'))
+                price=6000*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Alphabounce',int(price),qty)))
+                cursor.execute(insert_query)
+                conne.commit()
+                new=menu1()
+            elif new==6:
+                
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE name=%s", (qty, 'Queer'))
+                price=1000*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Queer',int(price),qty)))
+                cursor.execute(insert_query)
+                conne.commit()
+                new=menu1()
+            elif new==7:
+                
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE name=%s", (qty, 'Smith'))
+                price=1000*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Smith',int(price),qty)))
+                cursor.execute(insert_query)
+                conne.commit()
+                new=menu1()
+            elif new==8:
+                
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE name=%s", (qty, 'Cord'))
+                price=1500*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Cord',int(price),qty)))
+                print(insert_query)
+                cursor.execute(insert_query)
+                conne.commit() 
+                new=menu1()
+            elif new==9:
+                
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE name=%s", (qty, 'Airbounce'))
+                price=5500*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Airbounce',int(price),qty)))
+                cursor.execute(insert_query)
+                conne.commit() 
+                new=menu1()
+            elif new==10:
+                
+                qty = input("Enter the qty")
+                cursor.execute("UPDATE SHOE SET qty=qty-%s WHERE name=%s", (qty, 'Sneks'))
+                price=3000*qty
+                print(price)
+                insert_query = ("INSERT INTO SHOEBILL VALUES {}".format(('Sneks',int(price),qty)))
+                cursor.execute(insert_query)
+                conne.commit()
+                new=menu1()
+            elif new==11:
+                print('Records of sold items')
+                cursor.execute( "select * from SHOEBILL" )
+                print('doone')
+                for i,j,k in cursor.fetchall() :
+                    print i,j,k
+                quit()
+
+    elif run==5:
+        name=input("Enter the shoe you want to insert")
+        qty=input(("Enter the qty you want to insert"))
+        cursor.execute("UPDATE SHOE SET qty=qty+%s WHERE name=%s", (qty, name))
+        conn.commit()
+        run=menu()
+                                  
+
+
